@@ -1,0 +1,5 @@
+<kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <kbase name="kbase-napoli" default="true" eventProcessingMode="stream" equalsBehavior="identity" packages="*" includes="kbase-vesuvio">
+    <ksession name="ksession-napoli" type="stateful" default="true" clockType="realtime"/>
+  </kbase>
+</kmodule>

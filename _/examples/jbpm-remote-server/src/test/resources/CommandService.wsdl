@@ -1,0 +1,208 @@
+<?xml version="1.0" ?>
+<definitions xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+	xmlns:tns="http://services.remote.kie.org/6.2.0.1/command" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:jaxws="http://java.sun.com/xml/ns/jaxws" xmlns="http://schemas.xmlsoap.org/wsdl/"
+	name="CommandService" targetNamespace="http://services.remote.kie.org/6.2.0.1/command">
+	<types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+			xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+			xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+			xmlns:tns="http://services.remote.kie.org/6.2.0.1/command"
+			xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+			xmlns:jaxws="http://java.sun.com/xml/ns/jaxws" xmlns="http://schemas.xmlsoap.org/wsdl/"
+			jxb:extensionBindingPrefixes="xjc" jxb:version="1.0"
+			targetNamespace="http://services.remote.kie.org/6.2.0.1/command"
+			version="1.0">
+			<!-- >elementFormDefault="qualified" -->
+
+			<xs:annotation>
+
+				<xs:appinfo>
+
+					<jxb:globalBindings collectionType="java.util.LinkedList"
+						fixedAttributeAsConstantProperty="true" generateIsSetMethod="false">
+
+						<xjc:serializable uid="1"></xjc:serializable>
+
+					</jxb:globalBindings>
+
+				</xs:appinfo>
+
+			</xs:annotation>
+
+			<!-- COMMON -->
+
+
+			<xs:complexType abstract="true" name="serializableServiceObject">
+
+				<xs:annotation>
+
+					<xs:appinfo>
+
+						<jxb:class
+							ref="org.kie.remote.services.ws.common.SerializableServiceObject"></jxb:class>
+
+					</xs:appinfo>
+
+				</xs:annotation>
+
+				<xs:sequence></xs:sequence>
+
+			</xs:complexType>
+
+			<!-- EXCEPTION -->
+
+
+			<xs:element name="CommandServiceException" type="tns:WebServiceFaultInfo"></xs:element>
+
+
+			<xs:complexType name="WebServiceFaultInfo">
+
+				<xs:annotation>
+
+					<xs:appinfo>
+
+						<jxb:class ref="org.kie.remote.services.ws.common.WebServiceFaultInfo"></jxb:class>
+
+					</xs:appinfo>
+
+				</xs:annotation>
+
+			</xs:complexType>
+
+			<!-- OPERATIONS -->
+
+
+			<xs:element name="execute" type="tns:execute"></xs:element>
+
+
+			<xs:complexType name="execute">
+
+				<xs:sequence>
+
+					<xs:element minOccurs="0" name="request" type="tns:jaxbCommandsRequest"></xs:element>
+
+				</xs:sequence>
+
+			</xs:complexType>
+
+
+			<xs:element name="command-request" type="tns:jaxbCommandsRequest"></xs:element>
+
+
+			<xs:complexType name="jaxbCommandsRequest">
+
+				<xs:annotation>
+
+					<xs:appinfo>
+
+						<jxb:class ref="org.kie.remote.services.jaxb.JaxbCommandsRequest"></jxb:class>
+
+					</xs:appinfo>
+
+				</xs:annotation>
+
+			</xs:complexType>
+
+
+			<xs:element name="executeResponse" type="tns:executeResponse"></xs:element>
+
+
+			<xs:complexType name="executeResponse">
+
+				<xs:sequence>
+
+					<xs:element minOccurs="0" name="return"
+						type="tns:jaxbCommandsResponse"></xs:element>
+
+				</xs:sequence>
+
+			</xs:complexType>
+
+
+			<xs:element name="command-response" type="tns:jaxbCommandsResponse"></xs:element>
+
+
+			<xs:complexType name="jaxbCommandsResponse">
+
+				<xs:annotation>
+
+					<xs:appinfo>
+
+						<jxb:class ref="org.kie.remote.services.jaxb.JaxbCommandsResponse"></jxb:class>
+
+					</xs:appinfo>
+
+				</xs:annotation>
+
+			</xs:complexType>
+
+
+		</xs:schema>
+	</types>
+	<message name="CommandServiceException">
+		<part element="tns:CommandServiceException" name="fault">
+		</part>
+	</message>
+	<message name="executeResponse">
+		<part element="tns:executeResponse" name="parameters">
+		</part>
+	</message>
+	<message name="execute">
+		<part element="tns:execute" name="parameters">
+		</part>
+	</message>
+	<portType name="CommandServicePortType">
+		<operation name="execute">
+			<input message="tns:execute"
+				wsam:Action="http://services.remote.kie.org/6.2.0.1/command/CommandService/executeRequest">
+			</input>
+			<output message="tns:executeResponse"
+				wsam:Action="http://services.remote.kie.org/6.2.0.1/command/CommandService/executeResponse">
+			</output>
+			<fault message="tns:CommandServiceException" name="CommandServiceException"
+				wsam:Action="http://services.remote.kie.org/6.2.0.1/command/CommandService/execute/Fault/CommandServiceException">
+				<jaxws:bindings>
+					<jaxws:class name="CommandWebServiceException"></jaxws:class>
+				</jaxws:bindings>
+			</fault>
+		</operation>
+		<jaxws:bindings>
+			<jaxws:class name="CommandWebService"></jaxws:class>
+		</jaxws:bindings>
+	</portType>
+	<binding name="CommandServiceBasicAuthBinding" type="tns:CommandServicePortType">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+		<operation name="execute">
+			<soap:operation soapAction=""></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+			<fault name="CommandServiceException">
+				<soap:fault name="CommandServiceException" use="literal"></soap:fault>
+			</fault>
+		</operation>
+	</binding>
+	<service name="CommandServiceBasicAuth">
+		<port binding="tns:CommandServiceBasicAuthBinding" name="CommandServiceBasicAuthPort">
+			<jaxws:bindings>
+				<jaxws:provider>true</jaxws:provider>
+			</jaxws:bindings>
+			<soap:address location="http://localhost:8080/jbpm-console/ws/CommandService"></soap:address>
+		</port>
+		<jaxws:bindings>
+			<jaxws:class name="CommandServiceBasicAuthClient"></jaxws:class>
+		</jaxws:bindings>
+	</service>
+	<jaxws:bindings>
+		<jaxws:enableWrapperStyle>true</jaxws:enableWrapperStyle>
+		<jaxws:enableAsyncMapping>false</jaxws:enableAsyncMapping>
+	</jaxws:bindings>
+</definitions>
